@@ -1,0 +1,394 @@
+substitutions:
+  name: open-lc-231
+  friendly_name: Open LC-231
+  grundfos_mac_address: !secret grundfos_mac_address
+  lc231_fast_update_interval: 2s
+  lc231_regular_update_interval: 30s
+  lc231_slow_update_interval: 5min
+
+esphome:
+  project:
+    name: yepiq.Open-LC-231
+    version: 0.1.0
+
+packages:
+  - url: https://github.com/ngorchilov/esphome-lib
+    ref: main
+    refresh: 0s
+    files:
+      - path: devices/m5stack-poesp32.yaml
+        vars:
+          esp32_advanced:
+            sram1_as_iram: true
+
+external_components:
+  - source:
+      type: local
+      path: components
+
+logger:
+  level: DEBUG
+
+esp32_ble_tracker:
+
+ble_client:
+  - mac_address: ${grundfos_mac_address}
+    id: ble_client_id
+    on_connect:
+      then:
+        - lambda: |-
+            id(ble_client_id).pair();
+
+grundfos_lc231:
+  id: lc231
+  ble_client_id: ble_client_id
+  fast_update_interval: ${lc231_fast_update_interval}
+  regular_update_interval: ${lc231_regular_update_interval}
+  slow_update_interval: ${lc231_slow_update_interval}
+
+  connected:
+    name: LC-231 Connected
+
+  protocol_status:
+    name: LC-231 Protocol Status
+
+  protocol_errors:
+    name: LC-231 Protocol Errors
+
+  water_level:
+    name: Water Level
+
+  cio1_level:
+    name: CIO1 Measured Level
+    disabled_by_default: true
+
+  cio1_input_current:
+    name: CIO1 Input Current
+    disabled_by_default: true
+
+  above_stop_level:
+    name: Water Above Stop Level
+
+  controller_total_on_time:
+    name: Controller Total On Time
+
+  controller_active_pumping_time:
+    name: Controller Active Pumping Time
+
+  mains_phase_to_neutral_voltage:
+    name: Mains Phase-to-Neutral Voltage
+
+  mains_phase_to_phase_voltage:
+    name: Mains Phase-to-Phase Voltage
+
+  mains_unidentified_voltage:
+    name: Mains Unidentified Voltage
+
+  unidentified_temperature:
+    name: Unidentified Temperature
+
+  pump_1_temperature:
+    name: Pump 1 Temperature
+
+  pump_2_temperature:
+    name: Pump 2 Temperature
+
+  high_level_after_run_time:
+    name: High-Level After-Run Time
+
+  stop_delay_time:
+    name: Stop Delay Time
+    disabled_by_default: true
+
+  forced_start_time:
+    name: Forced Start Time
+    disabled_by_default: true
+
+  manual_start_return_mode:
+    name: Manual Start Return Mode
+
+  inter_pump_delay:
+    name: Inter-Pump Delay
+    disabled_by_default: true
+
+  maximum_running_pumps:
+    name: Maximum Running Pumps
+    disabled_by_default: true
+
+  maximum_run_time:
+    name: Maximum Run Time
+    disabled_by_default: true
+
+  pump_pause_time:
+    name: Pump Pause Time
+    disabled_by_default: true
+
+  rtc_unidentified_byte_10:
+    name: RTC Unidentified Byte 10
+
+  automatic_time_setting:
+    name: Automatic Time Setting
+    disabled_by_default: true
+
+  run_and_pause_enabled:
+    name: Run and Pause Enabled
+    disabled_by_default: true
+
+  pump_1_running:
+    name: Pump 1 State
+
+  pump_1_control_selection:
+    name: Pump 1 Operating Mode
+
+  pump_1_lifetime_runs:
+    name: Pump 1 Lifetime Runs
+
+  pump_1_runs_last_hour:
+    name: Pump 1 Runs Last Hour
+
+  pump_1_runs_last_24_hours:
+    name: Pump 1 Runs Last 24 Hours
+
+  pump_1_lifetime_runtime:
+    name: Pump 1 Lifetime Runtime
+
+  pump_1_runtime_last_24_hours:
+    name: Pump 1 Runtime Last 24 Hours
+
+  pump_1_last_run_duration:
+    name: Pump 1 Last Run Duration
+
+  pump_1_runs_today:
+    name: Pump 1 Runs Today
+
+  pump_1_runs_yesterday:
+    name: Pump 1 Runs Yesterday
+
+  pump_1_runtime_today:
+    name: Pump 1 Runtime Today
+
+  pump_1_runtime_yesterday:
+    name: Pump 1 Runtime Yesterday
+
+  pump_1_live_voltage:
+    name: Pump 1 Live Voltage
+
+  pump_1_live_current:
+    name: Pump 1 Live Current
+
+  pump_1_live_power:
+    name: Pump 1 Live Power
+
+  pump_1_live_power_factor:
+    name: Pump 1 Live Power Factor
+
+  pump_1_last_run_current:
+    name: Pump 1 Last Run Current
+    disabled_by_default: true
+
+  pump_1_last_run_power_factor:
+    name: Pump 1 Last Run Power Factor
+    disabled_by_default: true
+
+  pump_1_last_run_power:
+    name: Pump 1 Last Run Power
+    disabled_by_default: true
+
+  pump_2_running:
+    name: Pump 2 State
+
+  pump_2_control_selection:
+    name: Pump 2 Operating Mode
+
+  pump_2_lifetime_runs:
+    name: Pump 2 Lifetime Runs
+
+  pump_2_runs_last_hour:
+    name: Pump 2 Runs Last Hour
+
+  pump_2_runs_last_24_hours:
+    name: Pump 2 Runs Last 24 Hours
+
+  pump_2_lifetime_runtime:
+    name: Pump 2 Lifetime Runtime
+
+  pump_2_runtime_last_24_hours:
+    name: Pump 2 Runtime Last 24 Hours
+
+  pump_2_last_run_duration:
+    name: Pump 2 Last Run Duration
+
+  pump_2_runs_today:
+    name: Pump 2 Runs Today
+
+  pump_2_runs_yesterday:
+    name: Pump 2 Runs Yesterday
+
+  pump_2_runtime_today:
+    name: Pump 2 Runtime Today
+
+  pump_2_runtime_yesterday:
+    name: Pump 2 Runtime Yesterday
+
+  pump_2_live_voltage:
+    name: Pump 2 Live Voltage
+
+  pump_2_live_current:
+    name: Pump 2 Live Current
+
+  pump_2_live_power:
+    name: Pump 2 Live Power
+
+  pump_2_live_power_factor:
+    name: Pump 2 Live Power Factor
+
+  pump_2_last_run_current:
+    name: Pump 2 Last Run Current
+    disabled_by_default: true
+
+  pump_2_last_run_power_factor:
+    name: Pump 2 Last Run Power Factor
+    disabled_by_default: true
+
+  pump_2_last_run_power:
+    name: Pump 2 Last Run Power
+    disabled_by_default: true
+
+  active_alarm:
+    name: Alarm
+
+  active_warning:
+    name: Warning
+
+  active_alarms_raw:
+    name: Active Alarm Codes
+    disabled_by_default: true
+
+  active_warnings_raw:
+    name: Active Warning Codes
+    disabled_by_default: true
+
+  last_alarm:
+    name: Last Alarm
+
+  last_warning:
+    name: Last Warning
+
+  last_alarm_time:
+    name: Last Alarm Time
+
+  last_warning_time:
+    name: Last Warning Time
+
+  product_type:
+    name: Product Type
+
+  product_number:
+    name: Product Number
+
+  serial_number:
+    name: Serial Number
+
+  production_code:
+    name: Production Code
+
+  application_software:
+    name: Application Software
+
+  motor_control_software:
+    name: Motor Control Software
+
+  ble_software:
+    name: BLE Software
+
+  system_name:
+    name: System Name
+
+  gsc_version:
+    name: GSC Version
+
+  controller_local_time:
+    name: Controller Local Time
+
+  last_clock_synchronization:
+    name: Last Clock Synchronization
+
+  dst_schedule:
+    name: DST Schedule
+
+  standard_utc_offset:
+    name: Standard UTC Offset
+
+  level_control_prefix_raw:
+    name: Level Control Prefix Raw
+
+  clock_record_5e0000_raw:
+    name: Clock Record 5E0000 Raw
+
+  clock_record_5e0001_raw:
+    name: Clock Record 5E0001 Raw
+
+  clock_record_5e0002_raw:
+    name: Clock Record 5E0002 Raw
+
+  clock_record_5e0003_raw:
+    name: Clock Record 5E0003 Raw
+
+  clock_record_5e0004_raw:
+    name: Clock Record 5E0004 Raw
+
+text_sensor:
+  - platform: ble_client
+    name: Manufacturer
+    ble_client_id: ble_client_id
+    service_uuid: 180A
+    characteristic_uuid: 2A29
+    update_interval: never
+    entity_category: diagnostic
+
+  - platform: ble_client
+    name: Model Number
+    ble_client_id: ble_client_id
+    service_uuid: 180A
+    characteristic_uuid: 2A24
+    update_interval: never
+    entity_category: diagnostic
+
+  - platform: ble_client
+    name: Hardware Revision
+    ble_client_id: ble_client_id
+    service_uuid: 180A
+    characteristic_uuid: 2A27
+    update_interval: never
+    entity_category: diagnostic
+
+  - platform: ble_client
+    name: Firmware Revision
+    ble_client_id: ble_client_id
+    service_uuid: 180A
+    characteristic_uuid: 2A26
+    update_interval: never
+    entity_category: diagnostic
+
+  - platform: ble_client
+    name: Software Revision
+    ble_client_id: ble_client_id
+    service_uuid: 180A
+    characteristic_uuid: 2A28
+    update_interval: never
+    entity_category: diagnostic
+
+switch:
+  - platform: template
+    name: LC-231 BLE Client
+    entity_category: config
+    optimistic: true
+    restore_mode: ALWAYS_ON
+    turn_on_action:
+      - lambda: |-
+          id(ble_client_id).set_enabled(true);
+      - ble_client.connect:
+          id: ble_client_id
+    turn_off_action:
+      - lambda: |-
+          id(ble_client_id).set_enabled(false);

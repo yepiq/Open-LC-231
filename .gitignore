@@ -1,0 +1,16 @@
+.*
+!.gitignore
+
+*.py[cod]
+*.egg-info/
+*.log
+*.pklg
+*.pcap
+*.pcapng
+*.gfpss
+
+/secrets.yaml
+/venv/
+__pycache__/
+/build/
+/dist/
