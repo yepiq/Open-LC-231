@@ -129,7 +129,7 @@ Product names are used only to identify compatibility and source material.
 ## License
 
 Original project code and documentation use the [MIT License](LICENSE).
-The grant applies to rights held by contributors, where copyright applies;
+The grant applies to rights held by the copyright holder, where copyright applies;
 it does not claim third-party rights or guarantee that every AI-assisted
 fragment is independently copyrightable. Third-party material and dependencies
 retain their own licenses.
